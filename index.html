@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>MIT Histogram</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+  </head>
+  <body>
+    <div id="plot"></div>
+    <script>
+      let dates = [];
+      let dateCounts = [];
+      fetch("/dates.json")
+        .then((response) => response.json())
+        .then((data) => {
+          data.entries.forEach((date) => {
+            dates.push(date.key);
+            dateCounts.push(date.count);
+          });
+        })
+        .then(() => {
+          let chartData = [
+            {
+              x: dateCounts,
+              y: dates,
+              type: "bar",
+              orientation: "h",
+              marker: {
+                color: "black",
+              },
+            },
+          ];
+          let layout = {
+            title: "MIT object dates",
+            xaxis: {
+              title: "Frequency",
+            },
+            yaxis: {
+              title: "Date",
+            },
+          };
+          Plotly.newPlot("plot", chartData, layout);
+        });
+    </script>
+  </body>
+</html>
