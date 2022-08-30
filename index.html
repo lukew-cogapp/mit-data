@@ -21,12 +21,12 @@
           });
         })
         .then(() => {
+          var myPlotDiv = document.getElementById("plot");
           let chartData = [
             {
-              x: dateCounts,
-              y: dates,
+              x: dates,
+              y: dateCounts,
               type: "bar",
-              orientation: "h",
               marker: {
                 color: "black",
               },
@@ -35,13 +35,16 @@
           let layout = {
             title: "MIT object dates",
             xaxis: {
-              title: "Frequency",
-            },
-            yaxis: {
               title: "Date",
             },
+            yaxis: {
+              title: "Frequency",
+            },
           };
-          Plotly.newPlot("plot", chartData, layout);
+          Plotly.newPlot(myPlotDiv, chartData, layout);
+          myPlotDiv.on("plotly_relayout", function (e) {
+            console.log(e);
+          });
         });
     </script>
   </body>
